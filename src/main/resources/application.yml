@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /api
+logging:
+  level:
+    root: INFO
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  data:
+    web:
+      pageable:
+        default-page-size: 50
+    mongodb:
+      user: ${MONGO_USER:cryptoImages}
+      password: ${MONGO_PASSWORD:Crypto123!}
+      uri: ${MONGO_HOST:mongodb://localhost:27017/cryptoImages}
+
