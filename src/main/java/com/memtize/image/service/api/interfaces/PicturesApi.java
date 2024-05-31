@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,7 +59,7 @@ public interface PicturesApi {
                     schema = @Schema(implementation = ErrorForm.class),
                     mediaType = MediaType.APPLICATION_JSON_VALUE))
         })
-    ResponseEntity<Resource> getMainPicture(@PathVariable String id, Boolean archive)
+    byte[] getMainPicture(@PathVariable String id, Boolean archive)
         throws IOException;
 
     @Operation(

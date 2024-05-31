@@ -3,16 +3,14 @@ package com.memtize.image.service.api.controllers;
 import com.memtize.image.service.api.interfaces.PicturesApi;
 import com.memtize.image.service.mongo.model.MainPicture;
 import com.memtize.image.service.mongo.model.Picture;
+import com.memtize.image.service.service.I18N;
 import com.memtize.image.service.service.PicturesService;
 import com.memtize.image.service.util.ApplicationException;
 import com.memtize.image.service.util.ErrorType;
-import com.memtize.image.service.util.Zipper;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,14 +40,16 @@ public class PicturesController implements PicturesApi {
   }
 
   @Override
-  @GetMapping(path = "/main", produces = "application/zip")
-  public ResponseEntity<Resource> getMainPicture(
-      @PathVariable String id, @RequestParam(defaultValue = "false") Boolean archive)
-      throws IOException {
+  @GetMapping(path = "/main", produces = "image/jpg")
+  public byte[] getMainPicture(
+      @PathVariable String id, @RequestParam(defaultValue = "false") Boolean archive) {
     List<Picture> pictures =
         picturesService.getMainPicture(id, Boolean.TRUE.equals(archive));
 
-    return Zipper.zipPictures(pictures, "ProfilePictures" + id);
+    if (pictures.size() == 1) {
+      return pictures.stream().findFirst().get().getData();
+    } throw new ApplicationException(
+        ErrorType.ENTITY_NOT_FOUND, I18N.getErrorMessage("crypto.notFound", id));
   }
 
   @Override

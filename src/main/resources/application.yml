@@ -15,7 +15,5 @@ spring:
       pageable:
         default-page-size: 50
     mongodb:
-      user: ${MONGO_USER:cryptoImages}
-      password: ${MONGO_PASSWORD:Crypto123!}
       uri: ${MONGO_HOST:mongodb://localhost:27017/cryptoImages}
 

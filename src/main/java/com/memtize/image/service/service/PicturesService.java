@@ -19,12 +19,6 @@ public class PicturesService {
 
     @Transactional(rollbackFor = Exception.class)
     public void addMainPicture(MainPicture profilePicture) {
-        if (!pictureRepositorySupplier
-            .getMainPictureRepository().existsById(profilePicture.getId())) {
-            throw new ApplicationException(
-                ErrorType.ENTITY_NOT_FOUND,
-                I18N.getErrorMessage("crypto.notFound", profilePicture.getCryptoId()));
-        }
         pictureRepositorySupplier
             .getMainPictureRepository()
             .deleteByCryptoId(profilePicture.getCryptoId());
